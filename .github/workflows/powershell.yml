@@ -1,0 +1,204 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# https://github.com/microsoft/action-psscriptanalyzer
+# For more information on PSScriptAnalyzer in general, see
+# https://github.com/PowerShell/PSScriptAnalyzer
+
+name: PSScriptAnalyzer
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '23 7 * * 0'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    name: PSScriptAnalyzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run PSScriptAnalyzer
+        uses: microsoft/psscriptanalyzer-action@6b2948b1944407914a58661c49941824d149734f
+        with:
+          # Check https://github.com/microsoft/action-psscriptanalyzer for more info about the options.
+          # The below set up runs PSScriptAnalyzer to your entire repository and runs some basic security rules.
+          path: .\
+          recurse: true
+          # Include your own basic security rules. Removing this option will run all the rules
+          includeRule: '"PSAvoidGlobalAliases", "PSAvoidUsingConvertToSecureStringWithPlainText"'
+          output: results.sarif
+
+      # Upload the SARIF file generated in the previous step
+      - name: Upload SARIF results file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
+- nombre: Configuración Java JDK
+
+  usos: acciones/setup-java@v1.4.4
+
+  con:
+
+    # La versión de Java para que esté disponible en la ruta. Toma una versión completa o parcial de Java, o la sintaxis 1.x (por ejemplo, 1.8 => Java 8.x). Las versiones de acceso anticipado se pueden especificar en forma de, por ejemplo, 14-ea, 14.0.0-ea o 14.0.0-ea.28
+
+    versión java:
+
+    # El tipo de paquete (jre, jdk, jdk+fx)
+
+    paquete java: # opcional, por defecto es jdk
+
+    # La arquitectura (x86, x64) del paquete.
+
+    arquitectura: # opcional, por defecto es x64
+
+    # Ruta a donde se encuentra el JDK comprimido. La ruta podría estar en su repositorio de origen o en una ruta local en el agente.
+
+    jdkFile: # opcional
+
+    # ID del repositorio de distributionManagement en el archivo pom.xml. El valor predeterminado es `github`
+
+    server-id: # opcional, el valor predeterminado es github
+
+    # Nombre de la variable de entorno para el nombre de usuario para la autenticación en el repositorio de Apache Maven. El valor predeterminado es $GITHUB_ACTOR
+
+    nombre de usuario del servidor: # opcional, el valor predeterminado es GITHUB_ACTOR
+
+    # Nombre de variable de entorno para contraseña o token para autenticación en el repositorio de Apache Maven. El valor predeterminado es $GITHUB_TOKEN
+
+    contraseña del servidor: # opcional, el valor predeterminado es GITHUB_TOKEN
+
+    # Ruta donde se escribirá el archivo settings.xml. El valor predeterminado es ~/.m2.
+
+    configuración-ruta: # opcional
+
+    # Clave privada GPG para importar. El valor predeterminado es una cadena vacía.
+
+    gpg-clave-privada: # opcional
+
+    # Nombre de la variable de entorno para la frase de contraseña de la clave privada de GPG. El valor predeterminado es $GPG_PASSPHRASE.
+
+    frase de contraseña gpg: # opcional
+    - nombre: Configuración .NET Core SDK
+
+  usos: acciones/setup-dotnet@v3.0.3
+
+  con:
+
+    # Versiones SDK opcionales para usar. Si no se proporciona, instalará la versión global.json cuando esté disponible. Ejemplos: 2.2.104, 3.1, 3.1.x, 3.x
+
+    versión-dotnet: # opcional
+
+    # Calidad opcional de la construcción. Los valores posibles son: diario, firmado, validado, vista previa, ga.
+
+    calidad dotnet: # opcional
+
+    # Ubicación opcional de global.json, si su global.json no se encuentra en la raíz del repositorio.
+
+    archivo-json-global: # opcional
+
+    # Fuente de paquete opcional para la que configurar la autenticación. Consultará cualquier NuGet.config existente en la raíz del repositorio y proporcionará un NuGet.config temporal utilizando la variable de entorno NUGET_AUTH_TOKEN como ClearTextPassword.
+
+    fuente-url: # opcional
+
+    # PROPIETARIO opcional para usar paquetes de organizaciones/usuarios del Registro de paquetes de GitHub que no sean el propietario del repositorio actual. Solo se usa si también se proporciona una URL de GPR en source-url
+
+    propietario: # opcional
+
+    # Ubicación opcional de NuGet.config, si su NuGet.config no se encuentra en la raíz del repositorio.
+
+    archivo de configuración: # opcional
+    
+    - nombre: configuración del entorno Node.js
+
+  usos: acciones/setup-node@v2.5.2
+
+  con:
+
+    # Establecer autenticación siempre en npmrc
+
+    always-auth: # opcional, el valor predeterminado es falso
+
+    # Versión Especificación de la versión a usar. Ejemplos: 12.x, 10.15.1, >=10.15.0
+
+    versión-nodo: # opcional
+
+    # Archivo que contiene la versión Spec de la versión a usar. Ejemplos: .nvmrc, .node-version
+
+    archivo-versión-nodo: # opcional
+
+    # Arquitectura de destino para el uso de Node. Ejemplos: x86, x64. Utilizará la arquitectura del sistema de forma predeterminada.
+
+    arquitectura: # opcional
+
+    # Establezca esta opción si desea que la acción busque la última versión disponible que cumpla con las especificaciones de la versión
+
+    comprobar-último: # opcional
+
+    # Registro opcional para configurar la autenticación. Establecerá el registro en un archivo de nivel de proyecto .npmrc y .yarnrc, y configurará la autenticación para leer desde env.NODE_AUTH_TOKEN
+
+    registro-url: # opcional
+
+    # Ámbito opcional para autenticar contra registros de ámbito
+
+    alcance: # opcional
+
+    # Se usa para extraer distribuciones de nodos de versiones de nodos. Dado que existe un valor predeterminado, normalmente el usuario no lo proporciona.
+
+    token: # opcional, el valor predeterminado es ${{ github.token }}
+
+    # Se usa para especificar un administrador de paquetes para el almacenamiento en caché en el directorio predeterminado. Valores admitidos: npm, yarn, pnpm
+
+    caché: # opcional
+
+    # Se usa para especificar la ruta a un archivo de dependencia: package-lock.json, yarn.lock, etc. Admite comodines o una lista de nombres de archivo para almacenar en caché múltiples dependencias.
+
+    ruta-dependencia-caché: # opcional
+
+    # Obsoleto. Utilice la versión de nodo en su lugar. No será compatible después del 1 de octubre de 2019
+
+    versión: # opcional
+    - nombre: Cargar un artefacto de construcción
+
+  usos: acciones/subir-artefacto@v3.1.2
+
+  con:
+
+    # Nombre del artefacto
+
+    nombre: # opcional, por defecto es artefacto
+
+    # Un patrón de archivo, directorio o comodín que describe qué cargar
+
+    camino:
+
+    # El comportamiento deseado si no se encuentran archivos usando la ruta provista.
+
+Opciones Disponibles:
+
+  advertir: emite una advertencia pero no falla la acción
+
+  error: falla la acción con un mensaje de error
+
+  ignorar: no mostrar ninguna advertencia o error, la acción no falla
+
+    if-no-files-found: # opcional, por defecto es advertir
+
+    # Duración después de la cual caducará el artefacto en días. 0 significa usar la retención predeterminada.
+
+Mínimo 1 día. Máximo 90 días a menos que se cambie desde la página de configuración del repositorio.
+
+    días de retención: # opcional
