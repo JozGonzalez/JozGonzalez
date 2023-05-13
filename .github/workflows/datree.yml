@@ -44,4 +44,53 @@ jobs:
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: datree.sarif
+          sarif_file : datree.sarif
+- nombre: configuración del entorno Node.js
+
+  usos: acciones/setup-node@v2.5.2
+
+  con:
+
+    # Establecer autenticación siempre en npmrc
+
+    always-auth: # opcional, el valor predeterminado es falso
+
+    # Versión Especificación de la versión a usar. Ejemplos: 12.x, 10.15.1, >=10.15.0
+
+    versión-nodo: # opcional
+
+    # Archivo que contiene la versión Spec de la versión a usar. Ejemplos: .nvmrc, .node-version
+
+    archivo-versión-nodo: # opcional
+
+    # Arquitectura de destino para el uso de Node. Ejemplos: x86, x64. Utilizará la arquitectura del sistema de forma predeterminada.
+
+    arquitectura: # opcional
+
+    # Establezca esta opción si desea que la acción busque la última versión disponible que cumpla con las especificaciones de la versión
+
+    comprobar-último: # opcional
+
+    # Registro opcional para configurar la autenticación. Establecerá el registro en un archivo de nivel de proyecto .npmrc y .yarnrc, y configurará la autenticación para leer desde env.NODE_AUTH_TOKEN
+
+    registro-url: # opcional
+
+    # Ámbito opcional para autenticar contra registros de ámbito
+
+    alcance: # opcional
+
+    # Se usa para extraer distribuciones de nodos de versiones de nodos. Dado que existe un valor predeterminado, normalmente el usuario no lo proporciona.
+
+    token: # opcional, el valor predeterminado es ${{ github.token }}
+
+    # Se usa para especificar un administrador de paquetes para el almacenamiento en caché en el directorio predeterminado. Valores admitidos: npm, yarn, pnpm
+
+    caché: # opcional
+
+    # Se usa para especificar la ruta a un archivo de dependencia: package-lock.json, yarn.lock, etc. Admite comodines o una lista de nombres de archivo para almacenar en caché múltiples dependencias.
+
+    ruta-dependencia-caché: # opcional
+
+    # Obsoleto. Utilice la versión de nodo en su lugar. No será compatible después del 1 de octubre de 2019
+
+    versión: # opcional
